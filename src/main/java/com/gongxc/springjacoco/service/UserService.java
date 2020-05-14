@@ -13,9 +13,9 @@ import java.util.Optional;
  */
 public interface UserService {
 
-    User getOne(Integer id);
-
     long getCount();
+
+    boolean existsById(Integer id);
 
     List<User> findAll();
 
@@ -23,8 +23,12 @@ public interface UserService {
 
     User save(User user);
 
-    User update(User user);
+    void update(String username,String password);
 
-    public boolean existsById(Integer id);
+    User getByName(String username);
+
+    User login(String username,String password);
+
+    void deleteById(Integer id);
 
 }

@@ -21,10 +21,6 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
 
-    @Override
-    public User getOne(Integer id) {
-        return userRepository.getOne(id);
-    }
 
     @Override
     public long getCount() {
@@ -51,7 +47,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        return null;
+    public User login(String username, String password) {
+        return userRepository.login(username,password);
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(String username,String password) {
+        userRepository.change(password,username);
+    }
+
+    @Override
+    public User getByName(String username) {
+        User user;
+        try {
+            user = userRepository.findByUserName(username);
+
+        } catch (Exception e) {
+            user = userRepository.findsByUserName(username).get(0);
+
+        }
+        return user;
+    }
+
+
 }
