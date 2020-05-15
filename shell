@@ -1,0 +1,27 @@
+start(){
+java -javaagent:org.jacoco.agent-runtime.jar=output=tcpserver,address=0.0.0.0,port=6300 -jar spring-jacoco-0.0.1-SNAPSHOT.jar
+}
+dump(){
+java -jar org.jacoco.cli-nodeps.jar dump --address=0.0.0.0 --port 6300 --destfile=jacoco.exec $reset
+}
+
+report(){
+java -jar org.jacoco.cli-nodeps.jar report jacoco.exec --classfiles /home/jenkins/workspace/spring_jacoco/target/classes/ \
+--sourcefiles /home/jenkins/workspace/spring_jacoco/src/main/java --html $dir
+}
+
+sonar(){
+local key
+local version
+local xml
+local project
+local bin
+ sonar-scanner   \
+  -Dsonar.host.url=http://ip:9000   \
+  -Dsonar.login=$SONARQUBE_TOKEN   \
+  -Dsonar.projectKey=$key   \
+  -Dsonar.projectVersion=$version \
+  -Dsonar.coverage.jacoco.xmlReportPaths=$xml \
+  -Dsonar.projectBaseDir=$project \
+  -Dsonar.java.binaries=$bin
+}
